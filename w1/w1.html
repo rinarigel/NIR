@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Оценка документа, созданного обучаемым, несколькими экспертами</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="w1.js"></script>
+    <style>
+
+        .main-table {
+            min-width: 800px !important
+        }
+
+    </style>
+
+</head>
+<body>
+<table id="main-table" class="main-table" border="1">
+    <tr>
+        <th rowspan="2">Название показателя качества</th>
+        <th id="assessment" colspan="3">Оценка согласно показателю качества, в %</th>
+    </tr>
+
+    <tr id="experts">
+        <th colspan="1">
+            <button style="position: absolute; left: 345px" id="add-expert">+</button>
+            <input type="number" min="0" max="100">
+        </th>
+    </tr>
+
+    <tr id="criterion">
+        <td><input type="string" min="0" max="100"></td>
+        <td>
+            <input class="note-input" type="number" min="0" max="100" step="10">
+            (<input disabled type="number" class="weight" min="0" max="100">)
+        </td>
+        <td id="creation-button">
+            <button id="add-criterion">+</button>
+        </td>
+    </tr>
+</table>
+
+<div class="after_table_w3">
+    <p>
+        Итоговая оценка (в %)
+        <input title="Комплексная оценка" type="number" class="weight-w3" min="0" max="100">
+        (<input id="recommendVal" title="Рекомендуемое значение" type="number" class="weight-w31" min="0" max="100" disabled>)
+    </p>
+    <p>
+        Итоговая оценка (по 5-балльной системе)
+        <input title="Оценка по 4-бальной шкале" type="text" multiple name="name" list="numb"
+               class="scale4_in_w3"></label>
+        <datalist id="numb">
+            <option value="отл.">
+            <option value="хор.">
+            <option value="удовл.">
+            <option value="неуд.">
+        </datalist>
+        (<input title="Рекомендуемое значение" type="number" class="weight-w31" min="0" max="100" disabled>)
+    </p>
+</div>
+<textarea name="recommendations" id="" cols="30" rows="10" placeholder="Замечания и пожелания"></textarea>
+<buttom type="submit" class="calculate_w1">Вычислить</buttom>
+</body>
+</html>
