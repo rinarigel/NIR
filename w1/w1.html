@@ -24,15 +24,15 @@
 
     <tr id="experts">
         <th colspan="1">
-            <button class="button_expert" id="add-expert"><b>+</b></button>
-            <input type="text" class="note_input">
+            <button style="position: absolute; left: 345px" id="add-expert">+</button>
+            <input type="string" min="0" max="100">
         </th>
     </tr>
 
     <tr id="criterion">
-        <td><input type="text" class="input_criteria" min="0" max="100"></td>
+        <td><input type="string" min="0" max="100"></td>
         <td>
-            <input class="note_input" type="number" min="0" max="100" step="10">
+            <input class="note-input" type="number" min="0" max="100" step="10">
             (<input disabled type="number" class="weight" min="0" max="100">)
         </td>
         <td id="creation-button">
@@ -57,11 +57,10 @@
             <option value="удовл.">
             <option value="неуд.">
         </datalist>
-        (<input title="Рекомендуемое значение" type="number" class="weight-w31" min="0" max="100" disabled>)
+        (<input id="recommendNote" title="Рекомендуемое значение" type="string" class="weight-w31" min="0" max="100" disabled>)
     </p>
 </div>
 <textarea name="recommendations" id="" cols="30" rows="10" placeholder="Замечания и пожелания"></textarea>
 <buttom type="submit" class="calculate_w1">Вычислить</buttom>
 </body>
 </html>
-
