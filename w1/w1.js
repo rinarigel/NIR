@@ -15,7 +15,7 @@ $(function () {
                 const minusTemplateElement = minusTemplate[i];
                 tds += `<td>
                     <input type='number' class='note_input' min='0' max='100' step='10'>
-<!--                    (<input disabled type='number' class='weight' min='0' max='100'>)-->
+                   (<input disabled type='number' class='weight' min='0' max='100'>)
                 </td>`;
             }
 
@@ -24,8 +24,7 @@ $(function () {
                 ${tds}
              </tr>`;
         },
-        expertInput = `<td> <input  type='number' class='note_input' min='0' max='100' step='10'> 
-<!--(<input disabled type='number' class='weight' min='0' max='100'>) </td>-->`
+        expertInput = `<td> <input  type='number' class='note_input' min='0' max='100' step='10'> (<input disabled type='number' class='weight' min='0' max='100'>) </td>`
 
     let deleteFn = function () {
             $(this).parent().remove();
