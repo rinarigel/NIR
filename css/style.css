@@ -103,3 +103,17 @@ textarea{
 .link-to-old-reports{
     text-align: center;
 }
+.input_criteria{
+    justify-content:space-between;
+    display: flex;
+}
+.button_expert{
+    width: 20px; /* Ширина кнопки */
+    height: 20px; /* Высота кнопки */
+    border: none; /* Убираем рамку */
+    background-color: grey;
+    color: white;
+}
+.note_input{
+    width: 38%;
+}

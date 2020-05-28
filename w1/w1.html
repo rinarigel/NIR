@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Оценка документа, созданного обучаемым, несколькими экспертами</title>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="w1.js"></script>
@@ -24,15 +24,15 @@
 
     <tr id="experts">
         <th colspan="1">
-            <button style="position: absolute; left: 345px" id="add-expert">+</button>
-            <input type="number" min="0" max="100">
+            <button class="button_expert" id="add-expert"><b>+</b></button>
+            <input type="text" class="note_input">
         </th>
     </tr>
 
     <tr id="criterion">
-        <td><input type="string" min="0" max="100"></td>
+        <td><input type="text" class="input_criteria" min="0" max="100"></td>
         <td>
-            <input class="note-input" type="number" min="0" max="100" step="10">
+            <input class="note_input" type="number" min="0" max="100" step="10">
             (<input disabled type="number" class="weight" min="0" max="100">)
         </td>
         <td id="creation-button">
@@ -64,3 +64,4 @@
 <buttom type="submit" class="calculate_w1">Вычислить</buttom>
 </body>
 </html>
+
