@@ -34,7 +34,7 @@ table tr td:first-child::before {
 }
 
 input {
-    width: 95%;
+    width: 80%;
     text-align: center;
     border: 1px solid  rgb(255, 243, 230);
 }
@@ -46,10 +46,13 @@ a:hover, a:focus {
     opacity: .65;
 }
 .weight {
-    width: 38%;
+    width: 35%;
+}
+.note_input{
+    width: 75%;
 }
 .calculate_w1 {
-    background-color: #8a8a8a; 
+    background-color: #8a8a8a;
     color: white;
     padding: 15px 32px;
     margin-left:45%;
@@ -72,7 +75,7 @@ buttom:hover, buttom:focus {
 }
 .weight-w3 {
     text-align: center;
-    width: 10%; 
+    width: 10%;
 }
 .weight-w31 {
     text-align: center;
@@ -81,23 +84,23 @@ buttom:hover, buttom:focus {
 .scale4_in_w2 {
     margin-top: 1%;
     text-align: center;
-    width: 95%; 
+    width: 95%;
 }
 .scale4_in_w3 {
     text-align: center;
-    width: 10%; 
+    width: 10%;
 }
 .scale4 {
     text-align: center;
     margin-left:40%;
-    width: 20%; 
+    width: 20%;
 }
 textarea{
     margin-top: 1%;
     text-align: center;
     margin-left:30%;
     width: 40%;
-    height: 45px; 
+    height: 45px;
 
 }
 .link-to-old-reports{
@@ -114,6 +117,12 @@ textarea{
     background-color: grey;
     color: white;
 }
-.note_input{
-    width: 38%;
+.expert{
+    width: 50%;
+}
+.experts{
+    width: 45%;
+}
+.delete_creation_button{
+    border-color: white;
 }

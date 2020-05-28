@@ -3,10 +3,10 @@ $(function () {
     let mainTable = $('#main-table'),
         idCounter = 1,
         indexCounter = 1,
-        plusTemplate = `<td id='creation-button'><button id='add-criterion'>+</button></td>`,
-        minusTemplate = `<td id='delete-button'><button id='delete-criterion'>-</button></td>`,
+        plusTemplate = `<td id='creation-button' class="delete_creation_button"><button id='add-criterion'>+</button></td>`,
+        minusTemplate = `<td id='delete-button' class="delete_creation_button"><button id='delete-criterion'>-</button></td>`,
         expertTemplate = (index) => {
-            return `<th><input class="expert" type='string' min='0' max='100'><button id='delete-expert'>-</button></th>`
+            return `<th><input class="expert" type='string' placeholder="Имя эксперта"><button id='delete-expert'>-</button></th>`
         },
         criteriaTemplate = (id, tdsLength) => {
 
@@ -14,17 +14,18 @@ $(function () {
             for (let i = 0; i < tdsLength; i++) {
                 const minusTemplateElement = minusTemplate[i];
                 tds += `<td>
-                    <input type='number' class='note-input' min='0' max='100' step='10'>
-                    (<input disabled type='number' class='weight' min='0' max='100'>)
+                    <input type='number' class='note_input' min='0' max='100' step='10'>
+<!--                    (<input disabled type='number' class='weight' min='0' max='100'>)-->
                 </td>`;
             }
 
             return `<tr id='${id}'>
-                <td><input type='string' min='0' max='100'></td>
+                <td><input type='string' placeholder="Введите показатель качества"></td>
                 ${tds}
              </tr>`;
         },
-        expertInput = `<td> <input  type='number' class='note-input' min='0' max='100' step='10'> (<input disabled type='number' class='weight' min='0' max='100'>) </td>`
+        expertInput = `<td> <input  type='number' class='note_input' min='0' max='100' step='10'> 
+<!--(<input disabled type='number' class='weight' min='0' max='100'>) </td>-->`
 
     let deleteFn = function () {
             $(this).parent().remove();
@@ -73,7 +74,7 @@ $(function () {
             let val = 0,
                 recommendVal = $('#recommendVal'),
                 recommendNote = $('#recommendNote'),
-                notes = $('.note-input').filter(function (s) {
+                notes = $('.note_input').filter(function (s) {
                     return $(this).val() != 0;
                 });
 
@@ -84,10 +85,10 @@ $(function () {
 
             recommendVal.val(val / notes.length);
             recommendNote.val(function (val) {
-                if (val >= 85) return "Отлично";
-                if (val >= 70 && val < 85) return "Хорошо";
-                if (val >= 50 && val < 70) return "Удовлетворительно";
-                if (val < 50) return "Неудовлетворительно";
+                if (val >= 85) return "отл.";
+                if (val >= 70 && val < 85) return "хор.";
+                if (val >= 50 && val < 70) return "удовл.";
+                if (val < 50) return "неуд.";
             })
         };
 

@@ -7,33 +7,32 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="w1.js"></script>
     <style>
-
         .main-table {
             min-width: 800px !important
         }
 
     </style>
-
 </head>
+
 <body>
 <table id="main-table" class="main-table" border="1">
     <tr>
-        <th rowspan="2">Название показателя качества</th>
+        <th rowspan="2" >Название показателя качества</th>
         <th id="assessment" colspan="3">Оценка согласно показателю качества, в %</th>
     </tr>
 
     <tr id="experts">
         <th colspan="1">
-            <button style="position: absolute; left: 345px" id="add-expert">+</button>
-            <input type="string" min="0" max="100">
+            <button class="add_expert" id="add-expert">+</button>
+            <input type="string" placeholder="Имя эксперта" class="experts">
         </th>
     </tr>
 
     <tr id="criterion">
-        <td><input type="string" min="0" max="100"></td>
+        <td><input type="string" placeholder="Введите показатель качества"></td>
         <td>
-            <input class="note-input" type="number" min="0" max="100" step="10">
-            (<input disabled type="number" class="weight" min="0" max="100">)
+            <input class="note_input" type="number" min="0" max="100" step="10">
+<!--            (<input disabled type="number" class="weight" min="0" max="100">)-->
         </td>
         <td id="creation-button">
             <button id="add-criterion">+</button>
