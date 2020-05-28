@@ -72,6 +72,7 @@ $(function () {
         calculate = function () {
             let val = 0,
                 recommendVal = $('#recommendVal'),
+                recommendNote = $('#recommendNote'),
                 notes = $('.note-input').filter(function (s) {
                     return $(this).val() != 0;
                 });
@@ -80,7 +81,14 @@ $(function () {
             notes.each(function () {
                 val = val + parseInt($(this).val())
             })
+
             recommendVal.val(val / notes.length);
+            recommendNote.val(function (val) {
+                if (val >= 85) return "Отлично";
+                if (val >= 70 && val < 85) return "Хорошо";
+                if (val >= 50 && val < 70) return "Удовлетворительно";
+                if (val < 50) return "Неудовлетворительно";
+            })
         };
 
     $('#add-criterion').click(addCriteria);
