@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <title>Оценка документа, созданного обучаемым, несколькими экспертами</title>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="w1.js"></script>
+    <script src="js/w1.js"></script>
     <style>
 
         .main-table {
@@ -16,6 +16,45 @@
 
 </head>
 <body>
+<table id="first-table" border="1">
+    <tr>
+        <th rowspan="2">Название показателя качества</th>
+        <th id="value-of-criteria" colspan="1">Важность показателя качества по 10-балльной шкале</th>
+        <th rowspan="2">Вес показателя качества, в %</th>
+        <th rowspan="2"></th>
+    </tr>
+    <tr id="experts-first">
+        <th>
+            <button class="add_expert" id="add-expert-first">+</button>
+            <input type="string" class="weight" min="0" max="100">
+        </th>
+    </tr>
+    <tr>
+        <td><input type="number" class="weight" min="0" max="100"></td>
+        <td>
+            <label><input type="text" multiple name="number" list="numb"></label>
+            <datalist id="numb">
+                <option value="1">
+                <option value="2">
+                <option value="3">
+                <option value="4">
+                <option value="5">
+                <option value="6">
+                <option value="7">
+                <option value="8">
+                <option value="9">
+                <option value="10">
+            </datalist>
+        </td>
+        <td><input type="number" class="weight" min="0" max="100">
+            (<input id="weightVal" disabled type="text" class="weight" min="0" max="100">)
+        </td>
+        <td><button id="add-criteria">+</button></td>
+    </tr>
+</table>
+
+<buttom id="calculate-first-table">Вычислить</buttom>
+
 <table id="main-table" class="main-table" border="1">
     <tr>
         <th rowspan="2">Название показателя качества</th>
@@ -51,7 +90,7 @@
         Итоговая оценка (по 5-балльной системе)
         <input title="Оценка по 4-бальной шкале" type="text" multiple name="name" list="numb"
                class="scale4_in_w3"></label>
-        <datalist id="numb">
+        <datalist>
             <option value="отл.">
             <option value="хор.">
             <option value="удовл.">
@@ -61,6 +100,6 @@
     </p>
 </div>
 <textarea name="recommendations" id="" cols="30" rows="10" placeholder="Замечания и пожелания"></textarea>
-<buttom type="submit" class="calculate_w1">Вычислить</buttom>
+<buttom class="calculate_w1">Вычислить</buttom>
 </body>
 </html>
