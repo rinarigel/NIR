@@ -5,7 +5,7 @@ $(function () {
             experts = table.find('#experts-first'),
             addExpert = table.find('#add-expert-first'),
             valueOfCriteria = table.find('#value-of-criteria'),
-            expertTemp = `<th> <input type="text" class="expert-first weight" min="0" max="100"> <button id="delete-expert-first">-</button> </th>`,
+            expertTemp = `<th> <input type="text" class="expert-first weight" placeholder="Имя эксперта"> <button id="delete-expert-first">-</button> </th>`,
             expertInput = `<td><label><input class="expert-input" type="text" multiple name="number" list="numb"></label>
             <datalist id="numb"> <option value="1"> <option value="2"> <option value="3"> <option value="4"> <option value="5"> <option value="6"> <option value="7"> <option value="8"> <option value="9"> <option value="10">
             </datalist></td>`,
@@ -53,11 +53,11 @@ $(function () {
                 }
 
                 return `<tr>
-                            <td><input type="number" class="weight" min="0" max="100"></td>
+                            <td><input type="string" class="weight" placeholder="Введите показатель качества"></td>
                             ${tds}
                             <td>
-                                <input type="number" class="weight" min="0" max="100">
-                                (<input disabled id="weightVal" type="text" class="weight" min="0" max="100">)
+                                <input type="number" class="note_input" min="0" max="1" step="0.1">
+                                (<input disabled id="weightVal" type="text" class="note_input" min="0" max="1" maxlength="3">)
                             </td>
                             <td><button id="add-criteria">+</button></td>
                         </tr>`
@@ -128,8 +128,8 @@ $(function () {
                 let tds = '';
                 for (let i = 0; i < tdsLength; i++) {
                     tds += `<td>
-                    <input type='number' class='note_input' min='0' max='100' step='10'>
-                   (<input disabled type='number' class='weight' min='0' max='100'>)
+                    <input type='number' min='0' max='100' step='10'>
+<!--                   (<input disabled type='number' class='weight' min='0' max='100'>)-->
                 </td>`;
                 }
 
@@ -138,7 +138,8 @@ $(function () {
                 ${tds}
              </tr>`;
             },
-            expertInput = `<td> <input  type='number' class='note_input' min='0' max='100' step='10'> (<input disabled type='number' class='weight' min='0' max='100'>) </td>`,
+            expertInput = `<td> <input  type='number' min='0' max='100' step='10'> 
+<!--            (<input disabled type='number' class='weight' min='0' max='100'>) </td>-->`,
             deleteFn = function () {
                 $(this).parent().remove();
             },

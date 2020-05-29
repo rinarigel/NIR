@@ -32,7 +32,9 @@ table tr td:first-child::before {
     min-width: 1em;
     margin-right: 0.5em;
 }
-
+#first-table{
+    min-width: 850px !important
+}
 input {
     width: 80%;
     text-align: center;
@@ -46,10 +48,22 @@ a:hover, a:focus {
     opacity: .65;
 }
 .weight {
-    width: 35%;
+    width: 80%;
+    text-align: center;
+    border: 1px solid rgb(255, 243, 230);
 }
+
 .note_input{
     width: 35%;
+}
+#calculate-first-table{
+    background-color: #8a8a8a;
+    color: white;
+    padding: 15px 32px;
+    margin-left: 45%;
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
 }
 .calculate_w1 {
     background-color: #8a8a8a;
@@ -106,9 +120,20 @@ textarea{
 .link-to-old-reports{
     text-align: center;
 }
+.criteria{
+    width: 80%;
+    text-align: center;
+    border: 1px solid rgb(255, 243, 230);
+}
 .input_criteria{
     justify-content:space-between;
     display: flex;
+}
+.input_name_expert{
+    width: 55%;
+}
+.expert-first.weight{
+    width: 55%;
 }
 .button_expert{
     width: 20px; /* Ширина кнопки */

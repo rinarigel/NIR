@@ -7,30 +7,29 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="js/w1.js"></script>
     <style>
-
         .main-table {
             min-width: 800px !important
         }
 
     </style>
-
 </head>
+
 <body>
 <table id="first-table" border="1">
     <tr>
         <th rowspan="2">Название показателя качества</th>
         <th id="value-of-criteria" colspan="1">Важность показателя качества по 10-балльной шкале</th>
-        <th rowspan="2">Вес показателя качества, в %</th>
+        <th rowspan="2">Вес показателя качества</th>
         <th rowspan="2"></th>
     </tr>
     <tr id="experts-first">
         <th>
             <button class="add_expert" id="add-expert-first">+</button>
-            <input type="string" class="weight" min="0" max="100">
+            <input type="string" placeholder="Имя эксперта" class="input_name_expert">
         </th>
     </tr>
     <tr>
-        <td><input type="number" class="weight" min="0" max="100"></td>
+        <td><input type="string" placeholder="Введите показатель качества"></td>
         <td>
             <label><input type="text" multiple name="number" list="numb"></label>
             <datalist id="numb">
@@ -46,8 +45,8 @@
                 <option value="10">
             </datalist>
         </td>
-        <td><input type="number" class="weight" min="0" max="100">
-            (<input id="weightVal" disabled type="text" class="weight" min="0" max="100">)
+        <td><input type="number" class="note_input" min="0" max="1" step="0.1">
+            (<input id="weightVal" disabled type="text" class="note_input" min="0" max="1">)
         </td>
         <td><button id="add-criteria">+</button></td>
     </tr>
@@ -57,22 +56,22 @@
 
 <table id="main-table" class="main-table" border="1">
     <tr>
-        <th rowspan="2">Название показателя качества</th>
+        <th rowspan="2" >Название показателя качества</th>
         <th id="assessment" colspan="3">Оценка согласно показателю качества, в %</th>
     </tr>
 
     <tr id="experts">
         <th colspan="1">
-            <button style="position: absolute; left: 345px" id="add-expert">+</button>
-            <input type="string" min="0" max="100">
+            <button class="add_expert" id="add-expert">+</button>
+            <input type="string" placeholder="Имя эксперта" class="experts">
         </th>
     </tr>
 
     <tr id="criterion">
-        <td><input type="string" min="0" max="100"></td>
+        <td><input type="string" placeholder="Введите показатель качества"></td>
         <td>
-            <input class="note-input" type="number" min="0" max="100" step="10">
-            (<input disabled type="number" class="weight" min="0" max="100">)
+            <input type="number" min="0" max="100" step="10">
+<!--            (<input disabled type="number" class="weight" min="0" max="100">)-->
         </td>
         <td id="creation-button">
             <button id="add-criterion">+</button>
@@ -96,7 +95,7 @@
             <option value="удовл.">
             <option value="неуд.">
         </datalist>
-        (<input title="Рекомендуемое значение" type="number" class="weight-w31" min="0" max="100" disabled>)
+        (<input id="recommendNote" title="Рекомендуемое значение" type="string" class="weight-w31" min="0" max="100" disabled>)
     </p>
 </div>
 <textarea name="recommendations" id="" cols="30" rows="10" placeholder="Замечания и пожелания"></textarea>
