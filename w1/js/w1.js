@@ -143,22 +143,15 @@ $(function () {
 
                 let tds = '';
                 for (let i = 0; i < tdsLength; i++) {
-                    tds += `<td>
-                    <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">
-<!--                   (<input disabled type='number' class='weight' min='0' max='100'>)-->
-                </td>`;
+                    tds += `<td class='sum'><input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4"></td>`;
                 }
 
-                return `<tr id='${id}'>
-                <td><input type="text" placeholder="Введите показатель качества"></td>
-                ${tds}
-             </tr>`;
+                return `<tr id='${id}'><td><input type="text" placeholder="Введите показатель качества"></td>${tds}</tr>`;
             },
-            expertInput = `<td> <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">
-<!--            (<input disabled type='number' class='weight' min='0' max='100'>) </td>-->`,
-            deleteFn = function () {
-                $(this).parent().remove();
-            },
+            expertInput = `<td class='sum'> <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">`
+        deleteFn = function () {
+            $(this).parent().remove();
+        },
             addCriteria = function () {
 
                 mainTable.find('td').last().replaceWith($(minusTemplate).click(deleteFn));
@@ -198,8 +191,8 @@ $(function () {
                 template.find('#delete-expert').click(deleteExpert)
 
                 for (let i = 2; i < trs.length; i++) {
-                    let tr = trs[i],
-                        tds = $(tr).find('td');
+                    let tr = $(trs[i]),
+                        tds = tr.find('td');
 
                     tds.eq(0).after(expertInput);
                 }
@@ -207,6 +200,86 @@ $(function () {
                 $('#assessment').attr('colspan', trs.find('th').length);
 
                 $('.expert-note').on('change', procentValidator);
+            },
+            calculateWeight = function () {
+
+                mainTable.sumtr({
+                    readValue: function (me) {
+                        let val = me.find('input').val() || 0;
+                        return Math.round((parseFloat(val) + Number.EPSILON) * 100) / 100;
+                    },
+                    onComplete: function (sums) {
+
+                        let acc = [];
+
+                        for (let j = 1; j < sums.length - 1; j++) {
+
+                            let tdSum = sums[j],
+                                trs = mainTable.find('tr'),
+                                colIndex = j;
+
+                            acc.push({sum: tdSum, colVal: []});
+
+                            for (let i = 2; i < trs.length; i++) {
+                                let tds = $(trs[i]).find('td');
+
+                                let number = parseFloat(tds.eq(colIndex).find('input').val() || 0);
+
+                                acc[j - 1].colVal.push(number);
+                            }
+                        }
+
+                        let rs = acc.map(function (elem) {
+                            elem.d1 = Math.round((elem.sum / elem.colVal.length + Number.EPSILON) * 100) / 100;
+                            return elem;
+                        }).map(function (elem) {
+                            elem.colMod = elem.colVal.map(function (num) {
+                                return Math.round((Math.abs(num - elem.d1) + Number.EPSILON) * 100) / 100;
+                            })
+                            return elem;
+                        }).map(function (elem) {
+                            let calculateMod = elem.colMod.reduce(function (acc, num) {
+                                return acc + num;
+                            }, 0)
+
+                            elem.r1 = calculateMod / elem.sum
+                            return elem;
+                        });
+
+                        let R = rs.reduce(function (acc, elem) {
+                            return acc + elem.r1;
+                        }, 0);
+
+                        console.log(R)
+
+                        rs.map(function (elem) {
+                            elem.Wn = elem.r1 / R;
+                            return elem;
+                        }).map(function (elem) {
+                            elem.W = elem.Wn * 0.5;
+                            return elem;
+                        }).map(function (elem, index) {
+                            let val = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()) * 0.5;
+                            elem.FinW = elem.W + val;
+                            return elem;
+                        })
+
+                        let trs = mainTable.find('tr');
+
+                        let acc2 = {}
+                        for (let k = 2; k < trs.length; k++) {
+                            let tr = $(trs[k]),
+                                tds = tr.find('td');
+
+                            for (let i = 1; i < tds.length - 1; i++) {
+                                let td = $(tds[i])
+                            }
+                        }
+
+                        console.log(acc)
+                    }
+                });
+
             },
             calculate = function () {
                 let val = 0,
@@ -223,11 +296,13 @@ $(function () {
 
                 recommendVal.val(val / notes.length);
                 recommendNote.val(function () {
-                    if (val >= .85) return "отл.";
-                    if (val >= .7 && val < .85) return "хор.";
-                    if (val >= .5 && val < .7) return "удовл.";
-                    if (val < .5) return "неуд.";
+                    if (val >= 0.85) return "отл.";
+                    if (val >= 0.7 && val < 0.85) return "хор.";
+                    if (val >= 0.5 && val < 0.7) return "удовл.";
+                    if (val < 0.5) return "неуд.";
                 })
+
+                calculateWeight();
             },
             mainTableEvent = function () {
                 $('#add-criterion').click(addCriteria);
