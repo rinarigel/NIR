@@ -31,19 +31,7 @@
     <tr>
         <td><input type="string" placeholder="Введите показатель качества"></td>
         <td>
-            <label><input type="text" multiple name="number" list="numb"></label>
-            <datalist id="numb">
-                <option value="1">
-                <option value="2">
-                <option value="3">
-                <option value="4">
-                <option value="5">
-                <option value="6">
-                <option value="7">
-                <option value="8">
-                <option value="9">
-                <option value="10">
-            </datalist>
+            <label><input class="expert-input" type="text" pattern="\\d*"  maxlength="2"></label>
         </td>
         <td><input type="number" class="note_input" min="0" max="1" step="0.1">
             (<input id="weightVal" disabled type="text" class="note_input" min="0" max="1">)
@@ -70,7 +58,7 @@
     <tr id="criterion">
         <td><input type="string" placeholder="Введите показатель качества"></td>
         <td>
-            <input type="number" min="0" max="100" step="10">
+            <input class="expert-note note_input" type="text" min="0" max="100" maxlength="4">
 <!--            (<input disabled type="number" class="weight" min="0" max="100">)-->
         </td>
         <td id="creation-button">

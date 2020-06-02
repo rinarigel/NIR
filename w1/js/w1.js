@@ -1,14 +1,25 @@
 $(function () {
 
+    let digitsValidator = function (e) {
+        if (['Digit0', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9'].indexOf(e.code) !== -1) {
+            if (e.target.value && parseInt(e.target.value) === 1) return e.code === 'Digit0';
+            if (!e.target.value) return e.code !== 'Digit0';
+        }
+        return false;
+    }, procentValidator = function (e, min, max) {
+        const MIN = min || 0;
+        const MAX = max || 1;
+        const parsed = parseFloat(e.target.value)
+        return e.target.value = Math.min(Math.max(parsed, MIN), MAX)
+    };
+
     $(function () {
         let table = $('#first-table'),
             experts = table.find('#experts-first'),
             addExpert = table.find('#add-expert-first'),
             valueOfCriteria = table.find('#value-of-criteria'),
             expertTemp = `<th> <input type="text" class="expert-first weight" placeholder="Имя эксперта"> <button id="delete-expert-first">-</button> </th>`,
-            expertInput = `<td><label><input class="expert-input" type="text" multiple name="number" list="numb"></label>
-            <datalist id="numb"> <option value="1"> <option value="2"> <option value="3"> <option value="4"> <option value="5"> <option value="6"> <option value="7"> <option value="8"> <option value="9"> <option value="10">
-            </datalist></td>`,
+            expertInput = `<td><label><input class="expert-input" type="text" maxlength="2"></label></td>`,
             onDeleteExpert = function () {
 
                 let me = $(this),
@@ -43,6 +54,8 @@ $(function () {
 
                 temp.find('#delete-expert-first').click(onDeleteExpert);
 
+                table.find('.expert-input').on('keypress', digitsValidator);
+
             },
             addCriteria = table.find('#add-criteria'),
             deleteCriteriaButtonTemp = `<td><button id="delete-criteria">-</button></td>`,
@@ -57,7 +70,7 @@ $(function () {
                             ${tds}
                             <td>
                                 <input type="number" class="note_input" min="0" max="1" step="0.1">
-                                (<input disabled id="weightVal" type="text" class="note_input" min="0" max="1" maxlength="3">)
+                                (<input disabled id="weightVal" type="text" class="note_input" min="0" max="1" maxlength="4">)
                             </td>
                             <td><button id="add-criteria">+</button></td>
                         </tr>`
@@ -78,13 +91,15 @@ $(function () {
 
                 table.find('td').last().click(onAddCriteria);
 
+                table.find('.expert-input').on('keypress', digitsValidator);
+
                 buttonTemp.click(onDeleteCriteria);
+
             },
             calculate = $('#calculate-first-table'),
             onCalculate = function () {
 
-                let tds = table.find('td'),
-                    trs = table.find('tr'),
+                let trs = table.find('tr'),
                     allValue = table.find('.expert-input').toArray().reduce(function (acc, input) {
                         let val = $(input).val();
                         return acc + (val == 0 ? 0 : parseFloat(val));
@@ -94,13 +109,13 @@ $(function () {
                 trs.each(function () {
                     let tr = $(this),
                         inputsVal = tr.find('.expert-input').toArray().reduce(function (acc, input) {
-                        let val = $(input).val();
-                        return acc + (val == 0 ? 0 : parseFloat(val));
-                    }, 0);
+                            let val = $(input).val();
+                            return acc + (val == 0 ? 0 : parseFloat(val));
+                        }, 0);
 
                     if (inputsVal != 0) {
                         let number = inputsVal / allValue;
-                        tr.find('#weightVal').val(number == 0 ? 0 : parseFloat(number));
+                        tr.find('#weightVal').val(number == 0 ? 0 : Math.round((number + Number.EPSILON) * 100) / 100);
                     }
                 });
 
@@ -109,6 +124,7 @@ $(function () {
                 addExpert.click(onAddExpert);
                 addCriteria.click(onAddCriteria);
                 calculate.click(onCalculate);
+                table.find('.expert-input').on('keypress', digitsValidator);
             };
 
         onEvent();
@@ -128,7 +144,7 @@ $(function () {
                 let tds = '';
                 for (let i = 0; i < tdsLength; i++) {
                     tds += `<td>
-                    <input type='number' min='0' max='100' step='10'>
+                    <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">
 <!--                   (<input disabled type='number' class='weight' min='0' max='100'>)-->
                 </td>`;
                 }
@@ -138,7 +154,7 @@ $(function () {
                 ${tds}
              </tr>`;
             },
-            expertInput = `<td> <input  type='number' min='0' max='100' step='10'> 
+            expertInput = `<td> <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">
 <!--            (<input disabled type='number' class='weight' min='0' max='100'>) </td>-->`,
             deleteFn = function () {
                 $(this).parent().remove();
@@ -152,6 +168,8 @@ $(function () {
                 mainTable.find('tbody').last().append(criteria);
 
                 criteria.find('td').last().after(plusTemplate).next().click(addCriteria);
+
+                $('.expert-note').on('change', procentValidator);
 
             },
             deleteExpert = function () {
@@ -186,7 +204,9 @@ $(function () {
                     tds.eq(0).after(expertInput);
                 }
 
-                $('#assessment').attr('colspan', trs.find('th').length)
+                $('#assessment').attr('colspan', trs.find('th').length);
+
+                $('.expert-note').on('change', procentValidator);
             },
             calculate = function () {
                 let val = 0,
@@ -198,15 +218,15 @@ $(function () {
 
 
                 notes.each(function () {
-                    val = val + parseInt($(this).val())
+                    val = val + parseFloat($(this).val())
                 })
 
                 recommendVal.val(val / notes.length);
-                recommendNote.val(function (val) {
-                    if (val >= 85) return "отл.";
-                    if (val >= 70 && val < 85) return "хор.";
-                    if (val >= 50 && val < 70) return "удовл.";
-                    if (val < 50) return "неуд.";
+                recommendNote.val(function () {
+                    if (val >= .85) return "отл.";
+                    if (val >= .7 && val < .85) return "хор.";
+                    if (val >= .5 && val < .7) return "удовл.";
+                    if (val < .5) return "неуд.";
                 })
             },
             mainTableEvent = function () {
@@ -214,6 +234,7 @@ $(function () {
                 $('#delete-criterion').click(deleteFn);
                 $('#add-expert').click(addExpert);
                 $('.calculate_w1').click(calculate);
+                $('.expert-note').on('change', procentValidator);
             };
 
         mainTableEvent();
