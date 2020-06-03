@@ -342,7 +342,7 @@ $(function () {
                         })
 
                         $.each(acc2, (index, elem) => {
-                            let tableElem = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()),
+                            let tableElem = parseFloat($('#first-table').find('tr').eq(+index + 2).find('td').last().prev().find('#weightVal').val()),
                                 val = tableElem * 0.5;
                             elem.FinW = elem.W + val;
                         })
