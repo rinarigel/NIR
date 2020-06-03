@@ -262,19 +262,26 @@ $(function () {
                             let val = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()) * 0.5;
                             elem.FinW = elem.W + val;
                             return elem;
+                        }).map(function (elem) {
+                            elem.studentNote = elem.colVal.reduce(function (acc, num) {
+                                return acc + num * elem.FinW
+                            }, 0);
+                            return elem;
                         })
 
-                        let trs = mainTable.find('tr');
-
-                        let acc2 = {}
-                        for (let k = 2; k < trs.length; k++) {
-                            let tr = $(trs[k]),
-                                tds = tr.find('td');
-
-                            for (let i = 1; i < tds.length - 1; i++) {
-                                let td = $(tds[i])
+                        $('#weight-table').find('tr').eq(2).find('td').each(function (index) {
+                            let elem = acc[index];
+                            if (elem) {
+                                $(this).find('input').val(elem.FinW);
                             }
-                        }
+                        })
+
+                        $('#final-table').find('tr').eq(2).find('td').each(function (index) {
+                            let elem = acc[index];
+                            if (elem) {
+                                $(this).find('input').val(elem.studentNote);
+                            }
+                        })
 
                         console.log(acc)
                     }
