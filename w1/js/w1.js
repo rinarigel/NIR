@@ -201,7 +201,26 @@ $(function () {
 
                 $('.expert-note').on('change', procentValidator);
             },
+            setResult = function (acc, acc2) {
+
+                $('#weight-table').find('tr').eq(2).find('td').each(function (index) {
+                    let elem = acc[index];
+                    if (elem) {
+                        $(this).find('input').val(elem.FinW);
+                    }
+                })
+
+                $('#final-table').find('tr').eq(2).find('td').each(function (index) {
+                    let elem = acc2[index];
+                    if (elem) {
+                        $(this).find('input').val(elem);
+                    }
+                });
+
+            },
             calculateWeight = function () {
+
+                let trs = mainTable.find('tr');
 
                 mainTable.sumtr({
                     readValue: function (me) {
@@ -229,61 +248,119 @@ $(function () {
                             }
                         }
 
+                        let Ds = {};
+                        for (let i = 2; i < trs.length; i++) {
+                            let objectIndex = i - 2,
+                                tds = $(trs[i]).find('td'),
+                                rowElements = tds.length - 2;
+
+                            for (let k = 1; k < tds.length - 1; k++) {
+                                let val = parseFloat($(tds[k]).find('input').val());
+                                Ds[objectIndex] = ((Ds[objectIndex] || 0) + val);
+                            }
+                            Ds[objectIndex] = Ds[objectIndex] / rowElements
+                        }
+
+                        console.log(Ds)
+
                         let rs = acc.map(function (elem) {
-                            elem.d1 = Math.round((elem.sum / elem.colVal.length + Number.EPSILON) * 100) / 100;
-                            return elem;
-                        }).map(function (elem) {
-                            elem.colMod = elem.colVal.map(function (num) {
-                                return Math.round((Math.abs(num - elem.d1) + Number.EPSILON) * 100) / 100;
+                            elem.colMod = elem.colVal.map(function (num, index) {
+                                return Math.abs(num - Ds[index])
                             })
                             return elem;
-                        }).map(function (elem) {
-                            let calculateMod = elem.colMod.reduce(function (acc, num) {
-                                return acc + num;
-                            }, 0)
+                        })
 
-                            elem.r1 = calculateMod / elem.sum
-                            return elem;
+                        //     .map(function (elem) {
+                        //     let calculateMod = elem.colMod.reduce(function (acc, num) {
+                        //         return acc + num;
+                        //     }, 0)
+                        //
+                        //     elem.r1 = calculateMod / elem.sum
+                        //     return elem;
+                        // });
+
+
+                        // let R = rs.reduce(function (acc, elem) {
+                        //     return acc + elem.r1;
+                        // }, 0);
+
+                        // .map(function (elem) {
+                        //     elem.Wn = elem.r1 / R;
+                        //     return elem;
+                        // })
+
+                        // .map(function (elem) {
+                        //     elem.W = elem.Wn * 0.5;
+                        //     return elem;
+                        // })
+
+                        // .map(function (elem, index) {
+                        //     let val = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()) * 0.5;
+                        //     elem.FinW = elem.W + val;
+                        //     return elem;
+                        // })
+
+                        // rs.map(function (elem) {
+                        //     elem.studentNote = elem.colVal.reduce(function (acc, num, index) {
+                        //         return acc + (num * acc2[index].FinW)
+                        //     }, 0);
+                        //     return elem;
+                        // })
+
+
+                        let acc2 = {},
+                            R = 0;
+
+                        $(rs).each(function (index, elem) {
+                            elem.colVal.forEach(function (e, index) {
+                                acc2[index] = (acc2[index] || {});
+                                acc2[index].vals = (acc2[index].vals || []);
+                                acc2[index].vals.push(e);
+                            })
+                            elem.colMod.forEach(function (e, index) {
+                                acc2[index] = (acc2[index] || []);
+                                acc2[index].valsMod = (acc2[index].valsMod || []);
+                                acc2[index].valsMod.push(e);
+                            })
                         });
 
-                        let R = rs.reduce(function (acc, elem) {
-                            return acc + elem.r1;
-                        }, 0);
+                        $.each(acc2, function (index, elem) {
+                            let reduce = elem.valsMod.reduce((acc, e) => acc + e, 0);
+                            acc2[index].Rn = reduce / (Ds[index] * elem.valsMod.length);
+                        })
 
-                        console.log(R)
+                        $.each(acc2, (index, elem) => {
+                            R = R + elem.Rn
+                        })
 
-                        rs.map(function (elem) {
-                            elem.Wn = elem.r1 / R;
-                            return elem;
-                        }).map(function (elem) {
-                            elem.W = elem.Wn * 0.5;
-                            return elem;
-                        }).map(function (elem, index) {
-                            let val = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()) * 0.5;
+                        $.each(acc2, (index, elem) => {
+                            acc2[index].Wn = elem.Rn / R;
+                        })
+
+                        $.each(acc2, (index, elem) => {
+                            acc2[index].W = elem.Wn * 0.5;
+                        })
+
+                        $.each(acc2, (index, elem) => {
+                            let tableElem = parseFloat($('#first-table').find('tr').eq(index + 2).find('td').last().prev().find('#weightVal').val()),
+                                val = tableElem * 0.5;
                             elem.FinW = elem.W + val;
-                            return elem;
-                        }).map(function (elem) {
-                            elem.studentNote = elem.colVal.reduce(function (acc, num) {
-                                return acc + num * elem.FinW
-                            }, 0);
-                            return elem;
                         })
 
-                        $('#weight-table').find('tr').eq(2).find('td').each(function (index) {
-                            let elem = acc[index];
-                            if (elem) {
-                                $(this).find('input').val(elem.FinW);
-                            }
+                        $.each(acc2, (index, elem) => {
+                            elem.WeightOfNum = elem.vals.map(function (num) {
+                                return num * elem.FinW;
+                            });
                         })
 
-                        $('#final-table').find('tr').eq(2).find('td').each(function (index) {
-                            let elem = acc[index];
-                            if (elem) {
-                                $(this).find('input').val(elem.studentNote);
-                            }
+                        let studentNotes = {};
+                        $.each(acc2, (index, elem) => {
+                            elem.WeightOfNum.forEach(function (e, i) {
+                                studentNotes[i] = (studentNotes[i] || 0) + e;
+                            })
                         })
 
-                        console.log(acc)
+                        setResult(acc2, studentNotes);
                     }
                 });
 
