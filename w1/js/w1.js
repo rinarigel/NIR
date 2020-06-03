@@ -206,14 +206,14 @@ $(function () {
                 $('#weight-table').find('tr').eq(2).find('td').each(function (index) {
                     let elem = acc[index];
                     if (elem) {
-                        $(this).find('input').val(elem.FinW);
+                        $(this).find('input').val(Math.round((elem.FinW + Number.EPSILON) * 100) / 100);
                     }
                 })
 
                 $('#final-table').find('tr').eq(2).find('td').each(function (index) {
                     let elem = acc2[index];
                     if (elem) {
-                        $(this).find('input').val(elem);
+                        $(this).find('input').val(Math.round((elem + Number.EPSILON) * 100) / 100);
                     }
                 });
 
