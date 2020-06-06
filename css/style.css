@@ -5,15 +5,18 @@ body{
     line-height: 1.2;
     font-weight: normal;
     color: #000000;
+    background: linear-gradient(to top, #66c2ff, #ffffff );
 }
 table {
+    font-family:Comic Sans MS;
     border-collapse: collapse;
     border-spacing: 0;
-    border: 1px solid #E7D5C0;
+    border: 1px solid #808080;
     margin:20px auto;
     padding: .1em .5em;
     max-width: 600px;
     max-height: 300px;
+    background-color: #ffffff;
 }
 table tr td{
     text-align:left;
@@ -35,10 +38,24 @@ table tr td:first-child::before {
 #first-table{
     min-width: 850px !important
 }
+
+#main-table{
+    width: 800px;
+    height: 100px;
+}
 input {
     width: 80%;
     text-align: center;
-    border: 1px solid  rgb(255, 243, 230);
+    border: 1px solid  rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
+    /*background-color: #b8f4fe;*/
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+input:hover {
+    background: #f0f0f0; /* Цвет фона */
+    white-space: normal; /* Обычный перенос текста */
 }
 a {
     color: #888888;
@@ -50,29 +67,32 @@ a:hover, a:focus {
 .weight {
     width: 80%;
     text-align: center;
-    border: 1px solid rgb(255, 243, 230);
+    border: 1px solid rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
 }
 
 .note_input{
     width: 35%;
 }
 #calculate-first-table{
-    background-color: #8a8a8a;
+    background-color: #537efc;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 30px;
     margin-left: 45%;
     text-align: center;
     display: inline-block;
     font-size: 20px;
+    border-radius: 50px/30px;
 }
 .calculate_w1 {
-    background-color: #8a8a8a;
+    background-color: #537efc;
     color: white;
-    padding: 15px 32px;
-    margin-left:45%;
+    padding: 15px 30px;
+    margin-left: 45%;
     text-align: center;
     display: inline-block;
     font-size: 20px;
+    border-radius: 50px/30px;
 }
 buttom:hover, buttom:focus {
     opacity: .65;
@@ -90,19 +110,27 @@ buttom:hover, buttom:focus {
 .weight-w3 {
     text-align: center;
     width: 10%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 40px/40px;
 }
 .weight-w31 {
     text-align: center;
     width: 10%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 40px/40px;
 }
 .scale4_in_w2 {
     margin-top: 1%;
     text-align: center;
     width: 95%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 40px/40px;
 }
 .scale4_in_w3 {
     text-align: center;
     width: 10%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 40px/40px;
 }
 .scale4 {
     text-align: center;
