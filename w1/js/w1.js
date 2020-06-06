@@ -153,10 +153,10 @@ $(function () {
 
                 return `<tr id='${id}'><td><input type="text" placeholder="Введите показатель качества"></td>${tds}</tr>`;
             },
-            expertInput = `<td class='sum'> <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">`
-        deleteFn = function () {
-            $(this).parent().remove();
-        },
+            expertInput = `<td class='sum'> <input class="expert-note note_input" type='text' min='0' max='100' step='10' maxlength="4">`,
+            deleteFn = function () {
+                $(this).parent().remove();
+            },
             addCriteria = function () {
 
                 mainTable.find('td').last().replaceWith($(minusTemplate).click(deleteFn));
@@ -232,6 +232,7 @@ $(function () {
                         let val = me.find('input').val() || 0;
                         return toNormalFloat(parseFloat(val));
                     },
+                    //todo сделать отедельный компопнент для калькуляций
                     onComplete: function (sums) {
 
                         let acc = [];
@@ -307,8 +308,11 @@ $(function () {
                         });
 
                         $.each(acc2, (index, elem) => {
-                            let tableElem = parseFloat($('#first-table').find('tr').eq(+index + 2).find('td').last().prev().find('#weightVal').val()),
-                                val = tableElem * 0.5;
+                            let firstTableTD = $('#first-table').find('tr').eq(+index + 2).find('td').last().prev(),
+                                inputVat = firstTableTD.find('.note_input').val(),
+                                weightVal = firstTableTD.find('#weightVal').val(),
+                                val = parseFloat(inputVat || weightVal) * 0.5;
+
                             elem.FinW = elem.W + val;
                         });
 
