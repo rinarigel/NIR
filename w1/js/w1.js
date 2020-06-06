@@ -73,7 +73,7 @@ $(function () {
                             <td><input type="string" class="weight" placeholder="Введите показатель качества"></td>
                             ${tds}
                             <td>
-                                <input type="number" class="note_input" min="0" max="1" step="0.1">
+                                <input type="number" class="note_input float" min="0" max="1" step="0.1">
                                 (<input disabled id="weightVal" type="text" class="note_input" min="0" max="1" maxlength="4">)
                             </td>
                             <td><button id="add-criteria">+</button></td>
@@ -96,6 +96,8 @@ $(function () {
                 table.find('td').last().click(onAddCriteria);
 
                 table.find('.expert-input').on('keypress', digitsValidator);
+
+                table.find('.float').on('change', procentValidator);
 
                 buttonTemp.click(onDeleteCriteria);
 
@@ -129,6 +131,7 @@ $(function () {
                 addCriteria.click(onAddCriteria);
                 calculate.click(onCalculate);
                 table.find('.expert-input').on('keypress', digitsValidator);
+                table.find('.float').on('change', procentValidator);
             };
 
         onEvent();
